@@ -17,9 +17,18 @@ export default defineConfig({
       resolvers: [ElementPlusResolver()],
     }),
     Components({
-      resolvers: [ElementPlusResolver()],
+      // 配置 Element 采用 sass 样式配色系统
+      resolvers: [ElementPlusResolver({ importStyle: "sass" })],
     }),
   ],
+  css: {
+    preprocessorOptions: {
+      scss: {
+        // 自动导入定制化样式文件进行样式覆盖
+        additionalData: `@use "@/styles/element/index.scss" as *;`,
+      },
+    },
+  },
   resolve: {
     // 实际路径转化 @ -> src
     alias: {
