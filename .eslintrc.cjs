@@ -7,5 +7,9 @@ module.exports = {
   ],
   parserOptions: {
     ecmaVersion: 'latest'
+  },
+  rules: {
+    // 强制组件不需复合字幕命名
+    'vue/multi-word-component-names': 0
   }
 }
