@@ -30,7 +30,7 @@ onMounted(() => getHotList());
 
 <template>
   <div class="goods-hot">
-    <h3>{{ title     }}</h3>
+    <h3>{{ title }}</h3>
     <!-- 商品区块 -->
     <RouterLink
       to="/"
