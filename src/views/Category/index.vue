@@ -1,33 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref, watchEffect } from "vue";
-import { getCategoryAPI } from "@/apis/category";
-import { useRoute } from "vue-router";
-import { getBannerAPI } from "@/apis/home";
 import GoodsItem from "../Home/components/GoodsItem.vue";
+import useBanner from "./composables/useBanner";
+import useCategory from "./composables/useCategory";
 
-// 路由对象 -> 一级分类 id
-const route = useRoute();
+const { categoryData } = useCategory();
 
-const categoryData = ref({});
-
-const getCategory = async () => {
-  const res = await getCategoryAPI(route.params.id);
-
-  categoryData.value = res.result;
-};
-
-watchEffect(() => getCategory());
-
-// 轮播图
-const bannerList = ref([]);
-
-const getBanner = async () => {
-  const res = await getBannerAPI({ distributionSite: "2" });
-
-  bannerList.value = res.result;
-};
-
-onMounted(() => getBanner());
+const { bannerList } = useBanner();
 </script>
 
 <template>
