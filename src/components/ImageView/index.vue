@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { useMouseInElement } from "@vueuse/core";
+import { ref, watch } from "vue";
 
 // 图片列表
 const imageList = [
@@ -16,15 +17,43 @@ const activeIndex = ref(0);
 const handleMouseEnter = (i) => {
   activeIndex.value = i;
 };
+
+const box = ref();
+
+// 获取鼠标在盒子中的位置
+const { elementX, elementY, isOutside } = useMouseInElement(box);
+// 蒙版的移动范围计算 -> 鼠标总是处于蒙版的"中心", 蒙版距离盒子的距离就是 -> (鼠标位置 - 盒子"宽/高"一半)
+// -> X: left = elementX - 蒙版宽度一半  => 鼠标移动范围: (layerWidth / 2) < elementX < (boxWidth - (layerWidth / 2))
+// -> Y: top = elementY - 蒙版高度一半   => 鼠标移动范围: (layerHeight / 2) < elementY < (boxHeight - (layerHeight / 2))
+// 如果鼠标超过该界限, 则将数值固定!
+
+// 假设: box{ width: 400, height: 400 } layer{ width: 200, height: 200 }
+
+const left = ref(0),
+  top = ref(0);
+watch([elementX, elementY], () => {
+  // 蒙版边界内移动
+  if (elementX.value > 100 && elementX.value < 300)
+    left.value = elementX.value - 100;
+
+  if (elementY.value > 100 && elementY.value < 300)
+    top.value = elementY.value - 100;
+
+  // 蒙版超出边界
+  if (elementX.value > 300) left.value = 200;
+  if (elementX.value < 100) left.value = 0;
+  if (elementY.value < 100) top.value = 0;
+  if (elementY.value > 300) top.value = 200;
+});
 </script>
 
 <template>
   <div class="goods-image">
     <!-- 左侧大图-->
-    <div class="middle" ref="target">
+    <div ref="box" class="middle">
       <img :src="imageList[activeIndex]" alt="" />
       <!-- 蒙层小滑块 -->
-      <div class="layer" :style="{ left: `0px`, top: `0px` }"></div>
+      <div class="layer" :style="{ left: `${left}px`, top: `${top}px` }"></div>
     </div>
     <!-- 小图列表 -->
     <ul class="small">
