@@ -14,7 +14,7 @@ getHotList();
   <HomePanel title="人气推荐" sub-title="人气爆款 不容错过">
     <ul class="goods-list">
       <li v-for="item in hotList" :key="item.id">
-        <RouterLink to="/">
+        <RouterLink :to="`/detail/${item.id}`">
           <!-- 图片懒加载 -->
           <img v-lazy-image="item.picture" alt="" />
           <p class="name">{{ item.title }}</p>
