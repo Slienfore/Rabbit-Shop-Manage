@@ -36,6 +36,21 @@ const handleTabChange = () => {
   query.value.page = 1; // 重置
   getGoodList();
 };
+
+const disabledInfiniteLoad = ref(false);
+// 商品无限加载
+const handleInfiniteLoad = async () => {
+  // 加页
+  ++query.value.page;
+
+  const res = await getSubCategoryAPI(query.value);
+
+  // 没有数据了
+  if (!res.result.items.length) return (disabledInfiniteLoad.value = false); // 禁用
+
+  // 新、老数据拼接
+  goodList.value = [...goodList.value, ...res.result.items];
+};
 </script>
 
 <template>
@@ -57,7 +72,11 @@ const handleTabChange = () => {
         <el-tab-pane label="最高人气" name="orderNum"></el-tab-pane>
         <el-tab-pane label="评论最多" name="evaluateNum"></el-tab-pane>
       </el-tabs>
-      <div class="body">
+      <div
+        v-infinite-scroll="handleInfiniteLoad"
+        :infinite-scroll-disabled="disabledInfiniteLoad"
+        class="body"
+      >
         <!-- 商品列表-->
         <GoodsItem v-for="good in goodList" :good="good" :key="good.id" />
       </div>
