@@ -20,7 +20,7 @@ const { y } = useScroll(window);
           :key="item.id"
           class="home"
         >
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
 

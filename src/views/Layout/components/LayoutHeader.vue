@@ -16,7 +16,7 @@ const categoryStore = useCategoryStore();
           :key="item.id"
           class="home"
         >
-          <RouterLink to="/">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/category/${item.id}`">{{ item.name }}</RouterLink>
         </li>
       </ul>
       <div class="search">
