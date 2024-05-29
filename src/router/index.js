@@ -1,5 +1,13 @@
 import { createRouter, createWebHistory } from "vue-router";
-import { Layout, Login, Home, Category, SubCategory, Detail } from "@/views";
+import {
+  Layout,
+  Login,
+  Home,
+  Category,
+  SubCategory,
+  Detail,
+  CartList,
+} from "@/views";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +32,10 @@ const router = createRouter({
         {
           path: "detail/:id",
           component: Detail,
+        },
+        {
+          path: "cartlist",
+          component: CartList,
         },
       ],
     },
