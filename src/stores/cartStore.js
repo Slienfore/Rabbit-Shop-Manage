@@ -17,9 +17,17 @@ export const useCartStore = defineStore(
       }
     };
 
+    // 删除购物车
+    const delCart = (skuId) => {
+      const i = cartList.value.findIndex((item) => item.skuId === skuId);
+
+      cartList.value.splice(i, 1);
+    };
+
     return {
       cartList,
       addCart,
+      delCart
     };
   },
   { persist: true }
