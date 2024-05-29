@@ -1,3 +1,4 @@
+import { useUserStore } from "@/stores/user";
 import axios from "axios";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
@@ -9,7 +10,16 @@ const httpInstance = axios.create({
 
 // request interceptor
 httpInstance.interceptors.request.use(
-  (config) => config,
+  (config) => {
+    const userStore = useUserStore();
+    const token = userStore.userInfo.token;
+
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+
+    return config;
+  },
   (e) => Promise.reject(e)
 );
 
