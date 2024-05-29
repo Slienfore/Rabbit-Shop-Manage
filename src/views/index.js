@@ -8,3 +8,6 @@ export { default as CartList } from "./CartList/index.vue";
 export { default as Checkout } from "./Checkout/index.vue";
 export { default as Pay } from "./Pay/index.vue";
 export { default as PayBack } from "./Pay/PayBack.vue";
+export { default as Member } from "./Member/index.vue";
+export { default as UserInfo } from "./Member/components/UserInfo.vue";
+export { default as UserOrder } from "./Member/components/UserOrder.vue";

@@ -9,8 +9,11 @@ import {
   CartList,
   Checkout,
   Pay,
+  PayBack,
+  Member,
+  UserInfo,
+  UserOrder,
 } from "@/views";
-import PayBack from "@/views/Pay/PayBack.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +54,20 @@ const router = createRouter({
         {
           path: "paycallback",
           component: PayBack,
+        },
+        {
+          path: "member",
+          component: Member,
+          children: [
+            {
+              path: "user",
+              component: UserInfo,
+            },
+            {
+              path: "order",
+              component: UserOrder,
+            },
+          ],
         },
       ],
     },
