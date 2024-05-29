@@ -45,6 +45,20 @@ export const useCartStore = defineStore(
       cartList.value.reduce((acc, item) => acc + item.count * item.price, 0)
     );
 
+    // computed 计算购物车中的已选商品数量
+    const selectedCount = computed(() =>
+      cartList.value
+        .filter((item) => item.selected)
+        .reduce((a, c) => a + c.count, 0)
+    );
+
+    // computed 计算已选商品价钱
+    const selectedPrice = computed(() =>
+      cartList.value
+        .filter((item) => item.selected)
+        .reduce((a, c) => a + c.count * c.price, 0)
+    );
+
     // computed 计算购物车中是否是全部选中状态
     const isAll = computed(() => cartList.value.every((item) => item.selected));
 
@@ -52,11 +66,13 @@ export const useCartStore = defineStore(
       cartList,
       allCount,
       allPrice,
+      selectedCount,
+      selectedPrice,
       isAll,
       addCart,
       delCart,
       singleCheck,
-      allCheck
+      allCheck,
     };
   },
   { persist: true }
