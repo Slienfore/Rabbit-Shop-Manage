@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { loginAPI } from "@/apis/user";
 import { ref } from "vue";
+import { ElMessage } from "element-plus";
+import "element-plus/theme-chalk/el-message.css";
+import { useRouter } from "vue-router";
 
 const form = ref({
   account: "",
@@ -28,11 +32,16 @@ const rules = {
 };
 
 const formRef = ref();
-
+const router = useRouter();
 const handleLogin = () => {
-  formRef.value.validate((valid) => {
+  formRef.value.validate(async (valid) => {
+    const { account, password } = form.value;
     if (valid) {
-      
+      const res = await loginAPI({ account, password });
+
+      ElMessage({ type: "success", message: "登录成功" });
+
+      router.replace({ path: "/" }); // 直接替换, 防止用户反复返回登录页面
     }
   });
 };
