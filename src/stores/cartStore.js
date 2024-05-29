@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import { useUserStore } from "./user";
-import { findNewCartListAPI, insertCartAPI } from "@/apis/cart";
+import { delCartAPI, findNewCartListAPI, insertCartAPI } from "@/apis/cart";
 
 export const useCartStore = defineStore(
   "cart",
@@ -36,10 +36,20 @@ export const useCartStore = defineStore(
     };
 
     // 删除购物车
-    const delCart = (skuId) => {
-      const i = cartList.value.findIndex((item) => item.skuId === skuId);
+    const delCart = async (skuId) => {
+      if (isLogin.value) {
+        // 删除购物车
+        await delCartAPI([skuId]);
 
-      cartList.value.splice(i, 1);
+        // 获取最新购物车列表
+        const res = await findNewCartListAPI();
+
+        cartList.value = res.result;
+      } else {
+        const i = cartList.value.findIndex((item) => item.skuId === skuId);
+
+        cartList.value.splice(i, 1);
+      }
     };
 
     // 单选功能
