@@ -8,6 +8,7 @@ import {
   Detail,
   CartList,
   Checkout,
+  Pay,
 } from "@/views";
 
 const router = createRouter({
@@ -41,6 +42,10 @@ const router = createRouter({
         {
           path: "checkout",
           component: Checkout,
+        },
+        {
+          path: "pay",
+          component: Pay,
         },
       ],
     },

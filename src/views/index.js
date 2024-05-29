@@ -6,3 +6,4 @@ export { default as SubCategory } from "./SubCategory/index.vue";
 export { default as Detail } from "./Detail/index.vue";
 export { default as CartList } from "./CartList/index.vue";
 export { default as Checkout } from "./Checkout/index.vue";
+export { default as Pay } from "./Pay/index.vue";
