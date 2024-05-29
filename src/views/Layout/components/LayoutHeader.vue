@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useCategoryStore } from "@/stores/category";
+import HeaderCart from "./HeaderCart.vue";
 
 const categoryStore = useCategoryStore();
 </script>
@@ -16,7 +17,9 @@ const categoryStore = useCategoryStore();
           :key="item.id"
           class="home"
         >
-          <RouterLink :to="`/category/${item.id}`" active-class="active">{{ item.name }}</RouterLink>
+          <RouterLink :to="`/category/${item.id}`" active-class="active">{{
+            item.name
+          }}</RouterLink>
         </li>
       </ul>
       <div class="search">
@@ -24,6 +27,7 @@ const categoryStore = useCategoryStore();
         <input type="text" placeholder="搜一搜" />
       </div>
       <!-- 头部购物车 -->
+      <HeaderCart />
     </div>
   </header>
 </template>
