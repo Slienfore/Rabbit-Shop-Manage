@@ -7,6 +7,7 @@ import {
   SubCategory,
   Detail,
   CartList,
+  Checkout,
 } from "@/views";
 
 const router = createRouter({
@@ -36,6 +37,10 @@ const router = createRouter({
         {
           path: "cartlist",
           component: CartList,
+        },
+        {
+          path: "checkout",
+          component: Checkout,
         },
       ],
     },
