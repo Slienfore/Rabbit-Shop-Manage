@@ -30,6 +30,11 @@ export const useCartStore = defineStore(
       item.selected = selected;
     };
 
+    // 全选功能
+    const allCheck = (selected) => {
+      cartList.value.forEach((item) => (item.selected = selected));
+    };
+
     // computed 计算购物车中商品数量
     const allCount = computed(() =>
       cartList.value.reduce((acc, item) => acc + item.count, 0)
@@ -40,13 +45,18 @@ export const useCartStore = defineStore(
       cartList.value.reduce((acc, item) => acc + item.count * item.price, 0)
     );
 
+    // computed 计算购物车中是否是全部选中状态
+    const isAll = computed(() => cartList.value.every((item) => item.selected));
+
     return {
       cartList,
       allCount,
       allPrice,
+      isAll,
       addCart,
       delCart,
       singleCheck,
+      allCheck
     };
   },
   { persist: true }
