@@ -24,6 +24,12 @@ export const useCartStore = defineStore(
       cartList.value.splice(i, 1);
     };
 
+    // 单选功能
+    const singleCheck = (skuId, selected) => {
+      const item = cartList.value.find((item) => item.skuId === skuId);
+      item.selected = selected;
+    };
+
     // computed 计算购物车中商品数量
     const allCount = computed(() =>
       cartList.value.reduce((acc, item) => acc + item.count, 0)
@@ -40,6 +46,7 @@ export const useCartStore = defineStore(
       allPrice,
       addCart,
       delCart,
+      singleCheck,
     };
   },
   { persist: true }
