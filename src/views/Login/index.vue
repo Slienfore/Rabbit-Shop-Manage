@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { loginAPI } from "@/apis/user";
-import { ref } from "vue";
+import { useUserStore } from "@/stores/user";
 import { ElMessage } from "element-plus";
 import "element-plus/theme-chalk/el-message.css";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 
 const form = ref({
@@ -33,11 +33,13 @@ const rules = {
 
 const formRef = ref();
 const router = useRouter();
+const userStore = useUserStore();
 const handleLogin = () => {
   formRef.value.validate(async (valid) => {
     const { account, password } = form.value;
     if (valid) {
-      const res = await loginAPI({ account, password });
+      // pinia 进行登录保存用户数据
+      await userStore.getUserInfo({ account, password });
 
       ElMessage({ type: "success", message: "登录成功" });
 
