@@ -13,16 +13,21 @@ export const useCartStore = defineStore(
 
     const cartList = ref([]);
 
+    // 获取最新购物车列表
+    const updateNewList = async () => {
+      const res = await findNewCartListAPI();
+
+      cartList.value = res.result;
+    };
+
     const addCart = async (goods) => {
       const { skuId, count } = goods;
       // 已登录
       if (isLogin.value) {
         // 添加购物车
         await insertCartAPI({ skuId, count });
-        // 获取最新购物车列表
-        const res = await findNewCartListAPI();
 
-        cartList.value = res.result;
+        updateNewList();
       } else {
         // 添加购物车, 找得到的话, 数量加一, 找不到的话, 添加商品
         const item = cartList.value.find((item) => goods.skuId === item.skuId);
@@ -41,10 +46,7 @@ export const useCartStore = defineStore(
         // 删除购物车
         await delCartAPI([skuId]);
 
-        // 获取最新购物车列表
-        const res = await findNewCartListAPI();
-
-        cartList.value = res.result;
+        updateNewList();
       } else {
         const i = cartList.value.findIndex((item) => item.skuId === skuId);
 
@@ -102,11 +104,12 @@ export const useCartStore = defineStore(
       selectedCount,
       selectedPrice,
       isAll,
+      updateNewList,
       addCart,
       delCart,
       singleCheck,
       allCheck,
-      cleanCart
+      cleanCart,
     };
   },
   { persist: true }
