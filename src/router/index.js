@@ -10,6 +10,7 @@ import {
   Checkout,
   Pay,
 } from "@/views";
+import PayBack from "@/views/Pay/PayBack.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -46,6 +47,10 @@ const router = createRouter({
         {
           path: "pay",
           component: Pay,
+        },
+        {
+          path: "paycallback",
+          component: PayBack,
         },
       ],
     },
